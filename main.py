@@ -1,15 +1,12 @@
-import telebot
 import os
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-8743014682:AAHh0HxMGBdJOVWKJIs1aCjCdooYhZ68CAE = os.environ.get('8743014682:AAHh0HxMGBdJOVWKJIs1aCjCdooYhZ68CAE')
-bot = telebot.TeleBot(8743014682:AAHh0HxMGBdJOVWKJIs1aCjCdooYhZ68CAE)
+TOKEN = os.getenv("TOKEN")
 
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-	bot.reply_to(message, "تم تشغيل البوت ياحب#⚡")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('البوت شغال يا تومي 🍓')
 
-@bot.message_handler(func=lambda message: True)
-def echo_all(message):
-	bot.reply_to(message, message.text)
-
-bot.infinity_polling()
+app = ApplicationBuilder().token(TOKEN).build()
+app.add_handler(CommandHandler("start", start))
+app.run_polling()
